@@ -1,0 +1,30 @@
+@startuml db_users
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+class users {
+    **id: number <<generated>>**
+    --
+    *username: text
+    display_name: text
+    *hashed_passcode: text
+    *joined: datetime <<generated>>
+    modified: datetime <<generated>>
+    last_active: datetime
+    is_active: boolean
+}
+
+class roles {
+    **id: number  <<generated>>**
+    --
+    *name: text
+    *permissions: number
+}
+
+users }o--o{ roles
+
+@enduml

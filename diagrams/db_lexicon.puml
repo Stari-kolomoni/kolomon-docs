@@ -1,0 +1,94 @@
+@startuml db_lexicon
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+class links {
+    **id: number <<generated>>**
+    --
+    title: text
+    *url: text
+    *~~entry_id: number~~
+}
+
+class entries {
+    **id: number <<generated>>**
+    --
+    *lemma: text
+    description: text
+    *language: text
+    *created: datetime <<generated>>
+    *modified: datetime <<generated>>
+}
+
+class categories {
+    **id: number <<generated>>**
+    --
+    *name: text
+    description: text
+}
+
+class slovene {
+    **~~id: number~~**
+    --
+    alt_form: text
+}
+
+class english {
+    **~~id: number~~**
+}
+
+class suggestions {
+    **~~parent: number~~**
+    **~~child: number~~**
+}
+
+class translations {
+    **~~parent: number~~**
+    **~~child: number~~**
+    --
+    ~~state: number~~
+}
+
+class translation_states {
+    **id: number <<generated>>**
+    --
+    *label: text
+}
+
+class relations {
+    **~~entry1: number~~**
+    **~~entry2: number~~**
+}
+
+class event {
+    **id: number <<generated>>**
+    --
+    *table: text
+    *action: text
+    record_id: number
+    user_id: number
+    *username: text
+    *time: datetime <<generated>>
+}
+
+links ||--o{ entries
+categories |o--o{ entries
+
+slovene ||--o| entries
+english ||--o| entries
+
+translations ||--o{ entries
+translations ||--o{ entries
+translation_states }o--o| translations
+
+relations ||--o{ entries
+relations ||--o{ entries
+
+suggestions ||--o{ entries
+suggestions ||--o{ entries
+
+@enduml
